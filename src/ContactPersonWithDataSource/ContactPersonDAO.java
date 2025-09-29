@@ -180,4 +180,32 @@ public class ContactPersonDAO {
         return false;
     }
 
+    void updateEmails() {
+        // Update mails using batches
+        try {
+            connect();
+            conn.setAutoCommit(false);
+
+            PreparedStatement preparedStatement = null;
+            List<ContactPerson> contacts = getContacts();
+            preparedStatement = conn.prepareStatement("UPDATE ContactPerson SET mail = ? WHERE id = ?");
+            for (ContactPerson contact : contacts) {
+                int id = contact.getId();
+                String name = contact.getName().replace(' ','_');
+
+                preparedStatement.setString(1, name + "@edu.eg");
+                preparedStatement.setInt(2, id);
+                preparedStatement.addBatch();
+            }
+            assert preparedStatement != null;
+            int[] count = preparedStatement.executeBatch();
+            conn.commit();
+            conn.setAutoCommit(true);
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }

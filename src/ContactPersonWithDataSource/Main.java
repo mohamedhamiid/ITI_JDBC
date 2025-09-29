@@ -77,6 +77,15 @@ public class Main {
                         ", Phone: " + contact.getCellphone());
             }
 
+            // Test 5: Update mails by batch
+            System.out.println("\n6. Update mails by batch...");
+            dao.updateEmails();
+            allContacts = dao.getContacts();
+            System.out.println("Contacts after updating mails:");
+            for (ContactPerson contactPerson : allContacts) {
+                System.out.println(contactPerson.getName() + " : " + contactPerson.getMail());
+            }
+
             System.out.println("\n=== Test completed successfully! ===");
 
         } catch (Exception e) {
