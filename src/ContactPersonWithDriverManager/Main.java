@@ -1,4 +1,4 @@
-package ContactPerson;
+package ContactPersonWithDriverManager;
 
 import java.util.List;
 
